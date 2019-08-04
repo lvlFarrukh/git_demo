@@ -1,0 +1,19 @@
+
+git init  # for make repository
+
+git add # to add file
+
+git commit # for finially save file
+
+founder of git and linux is same
+
+intro page:
+
+    public: share data to all
+    private: in private only four people access it.
+
+    readme: file create has exension mt (mark down) file show in run time with documentation
+
+    commit with 32 characher that is professional way
+    
+    define commit with any verb
