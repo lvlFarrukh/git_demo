@@ -1,0 +1,155 @@
+import json
+import csv
+menu_list = {}
+check = 0
+"""Function for user input of items values"""
+def setup():
+    menu = []
+                                    # Pizza List
+    try:
+        with open("menu_sheet.json", "r") as js:
+            menu = json.load(js)
+    except:
+        print("file Not Found")
+    while True:
+        flavour = input("Flavour: ")
+        if flavour.lower() == "q":
+            break
+        size = input("Size: ")
+        prize = input("Prize: ")
+        c = 0
+        check = 0
+        for dic in menu:
+            if dic['flavour'] == flavour and dic['size'] == size:
+                menu_list = {"flavour": flavour, "size": size, "prize": prize}
+                menu[c] = menu_list
+                check = 1
+                break
+            c += 1
+        if check == 0:
+            menu_list = {"flavour": flavour, "size": size, "prize": prize}
+            menu.append(menu_list)
+        with open("menu_sheet.json", "w") as js:
+            json.dump(menu, js)
+
+                                    # cold Drink List
+def drink_menu():
+    drink = []
+    try:
+        with open("menu_drink.json", "r") as d_js:
+            drink = json.load(d_js)
+    except:
+        print("File Not Found")
+    while True:
+        color = input("color: ")
+        if color.lower() == "q":
+            break
+        size = input("Size: ")
+        prize = input("Prize: ")
+        c = 0
+        check = 0
+        for dic_drink in drink:
+            if dic_drink['color'] == color and dic_drink['size'] == size:
+                drink_list = {"color": color, "size": size, "prize": prize}
+                drink_list[c] = menu_list
+                check = 1
+                break
+            c += 1
+        if check == 0:
+            menu_list = {"color": color, "size": size, "prize": prize}
+            drink.append(menu_list)
+        with open("menu_drink.json", "w") as js:
+            json.dump(drink, js)
+
+def insert_csv():
+                            # for Pizza List
+    try:
+        obj_csv = open("menu_sheet.json", "r")
+        menu = json.load(obj_csv)
+        try:
+            with open("menu.csv", "w", newline="") as o_csv:
+                data_handler = csv.writer(o_csv, delimiter=",")
+                data_handler.writerow(["Flavour", "Size", "Prize"])
+                for dic in menu:
+                    data_handler.writerow([dic['flavour'], dic['size'], dic['prize']])
+        except:
+            print("CSV file not found!")
+            with open("menu.csv", "w", newline="") as o_csv:
+                data_handler = csv.writer(o_csv, delimiter=",")
+                data_handler.writerow(["Flavour", "Size", "Prize"])
+                for dic in menu:
+                    data_handler.writerow([dic['flavour'], dic['size'], dic['prize']])
+    except:
+        print("file Not Found")
+
+                            # for Drink list
+    try:
+        obj_csv = open("menu_drink.json", "r")
+        menu = json.load(obj_csv)
+        try:
+            with open("menu_drink.csv", "w", newline="") as d_csv:
+                data_handler = csv.writer(d_csv, delimiter=",")
+                data_handler.writerow(["Color", "Size", "Prize"])
+                for dic_d in menu:
+                    data_handler.writerow([dic_d['color'], dic_d['size'], dic_d['prize']])
+        except:
+            print("CSV file not found!")
+            with open("menu_drink.csv", "w", newline="") as d_csv:
+                data_handler = csv.writer(d_csv, delimiter=",")
+                data_handler.writerow(["color", "Size", "Prize"])
+                for dic_d in menu:
+                    data_handler.writerow([dic_d['color'], dic['size'], dic['prize']])
+    except:
+        print("file Not Found")
+def client_order():
+    print("\t\t\t     Wellcome to Fut Pizza")
+    print("\t\t\t\t\t     Menu")
+
+    with open("menu.csv", "r") as c_csv:
+        menu = csv.reader(c_csv)
+        for line in menu:
+                print(f"{line[0]}{'.'*(25-len(line[0]))}{line[1]}{'.'*(25-len(line[1]))}{line[2]}")
+        c_csv.close()
+        total = []
+    while True:
+        flavour = input("Enter Flavour: ")
+        if flavour.lower() == "q":
+            break
+        size = input("Enter Size: ")
+        temp_dic = {}
+        temp_list = []
+        obj = open("menu.csv", "r")
+        data = csv.reader(obj)
+        for rows in data:
+            if rows[0] == flavour and rows[1] == size:
+                total.append(int(rows[2]))
+                temp_dic = {"flavour": rows[0], "size": rows[1], "prize": rows[2]}
+                temp_list.append(temp_dic)
+                break
+    t_prize = 0
+    for prize in total:
+        t_prize += prize
+    temp_list.append(t_prize)
+    return temp_dic
+setup()
+drink_menu()
+insert_csv()
+total = client_order()
+c = 0
+p_total = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
