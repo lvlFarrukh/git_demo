@@ -1,6 +1,6 @@
-#import json
-#import csv
-#menu_list = {}
+import json
+import csv
+m_l = {}
 check = 0
 """Function for user input of items values"""
 def setup():
